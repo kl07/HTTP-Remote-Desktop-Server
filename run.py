@@ -46,6 +46,7 @@ def read(self, filename, getNpost):
         return [404, 'Not Found' + str(e)]
 
 epoch = ""
+keyevent = ""
 
 def do_GET2(self):
     #execfile('takess.py')
@@ -57,18 +58,31 @@ def do_GET2(self):
     par = urlparse.parse_qs(urlparse.urlparse(self.path).query)
     set = False
     global epoch
+    global keyevent
     try:
-        print par['mouse_x']
-        print par['mouse_y']
+        #print par['mouse_x']
+        #print par['mouse_y']
         if epoch != par['epoch']:
             set = True
     except:
         pass
 
-    if set == True:
-        #pyautogui.moveTo(int(par['mouse_x'][0]), int(par['mouse_y'][0]))
-        pyautogui.click(int(par['mouse_x'][0]), int(par['mouse_y'][0]))
-        epoch = par['epoch']
+    try:
+        if set == True:
+            #pyautogui.moveTo(int(par['mouse_x'][0]), int(par['mouse_y'][0]))
+            pyautogui.click(int(par['mouse_x'][0]), int(par['mouse_y'][0]))
+            epoch = par['epoch']
+    except:
+        pass
+
+    try:
+        if keyevent != par['_']:
+            #pyautogui.moveTo(int(par['mouse_x'][0]), int(par['mouse_y'][0]))
+            pyautogui.keyDown(par['key'][0])
+            keyevent = par['_']
+    except:
+        pass
+
 
     response = read(self, parsed_path.path, [par, None])
     self.send_response(response[0])
